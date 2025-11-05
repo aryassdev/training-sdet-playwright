@@ -31,3 +31,16 @@ test('user can not login with empty credentials', async ({ page }) => {
     await expect(page.locator('.oxd-input-group__message').nth(0)) .toHaveText('Required');
     await expect(page.locator('.oxd-input-group__message').nth(1)) .toHaveText('Required');
 });
+
+test('user can log out from orangehrmlive', async ({ page }) => {
+    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+
+    await page.locator('input[name="username"]').fill('Admin');
+    await page.locator('input[name="password"]').fill('admin123');
+    await page.locator('button[type="submit"]').click();
+
+    await page.locator('.oxd-userdropdown-tab .oxd-userdropdown-name').click();
+    await page.locator('a[href="/web/index.php/auth/logout"]').click();
+
+    await expect(page.url()).toBe('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+});
