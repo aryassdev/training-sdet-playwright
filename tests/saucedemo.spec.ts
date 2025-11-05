@@ -29,3 +29,16 @@ test('user cannot log in with empty username', async ({ page }) => {
 
     await expect(page.locator('[data-test="error"]')).toContainText('Username is required');
 });
+
+test('user can log out', async ({ page }) => {
+    await page.goto('https://www.saucedemo.com/');
+
+    await page.locator('[data-test="username"]').fill('standard_user');
+    await page.locator('[data-test="password"]').fill('secret_sauce');
+    await page.locator('[data-test="login-button"]').click();
+    
+    await page.locator('#react-burger-menu-btn').click();
+    await page.locator('[data-test="logout-sidebar-link"]').click();
+    
+    await expect(page.url()).toBe('https://www.saucedemo.com/');
+});
