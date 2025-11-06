@@ -1,6 +1,6 @@
 import { test, expect} from '@playwright/test';
 
-test('user can log in to saucedemo', async ({ page }) => {
+test('User should be able to Login with valid credentials and verify the correct URL after logged in', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/');
 
     await page.locator('[data-test="login-container"] [data-test="username"]').fill('standard_user');
@@ -10,7 +10,7 @@ test('user can log in to saucedemo', async ({ page }) => {
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
 });
 
-test('user cannot log in with invalid credentials', async ({ page }) => {
+test('User should unable to Login with invalid credentials and verify the “Username and password do not match any user in this service” message appears', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/');
     
     await page.locator('[data-test="login-container"] [data-test="username"]').fill('wrong_user');
@@ -20,7 +20,7 @@ test('user cannot log in with invalid credentials', async ({ page }) => {
     await expect(page.locator('[data-test="login-container"] [data-test="error"]')).toContainText('Username and password do not match any user in this service');
 });
 
-test('user cannot log in with empty username', async ({ page }) => {
+test('User should unable to Login with empty fields and verify the “Username is required” message appears', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/');
     
     await page.locator('[data-test="login-container"] [data-test="username"]').fill('');
@@ -30,7 +30,7 @@ test('user cannot log in with empty username', async ({ page }) => {
     await expect(page.locator('[data-test="login-container"] [data-test="error"]')).toContainText('Username is required');
 });
 
-test('user can log out', async ({ page }) => {
+test('User should be able to Logout and verify the correct URL after logged out', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/');
 
     await page.locator('[data-test="login-container"] [data-test="username"]').fill('standard_user');

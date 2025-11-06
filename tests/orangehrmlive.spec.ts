@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('user can log in to orangehrmlive', async ({ page }) => {
+test('User should be able to Login with valid credentials and verify the correct URL after logged in', async ({ page }) => {
     await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
 
     await page.locator('.orangehrm-login-form input[name="username"]').fill('Admin');
@@ -10,7 +10,7 @@ test('user can log in to orangehrmlive', async ({ page }) => {
     await expect(page).toHaveURL('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index');
 });
 
-test('user can not login to orangehrmlive with invalid credentials', async ({ page }) => {
+test('User should unable to Login with invalid credentials and verify the “Invalid credentials” message appears', async ({ page }) => {
     await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
 
     await page.locator('.orangehrm-login-form input[name="username"]').fill('some_user');
@@ -20,7 +20,7 @@ test('user can not login to orangehrmlive with invalid credentials', async ({ pa
     await expect(page.locator('.oxd-alert-content--error .oxd-alert-content-text')).toHaveText('Invalid credentials');
 })
 
-test('user can not login with empty credentials', async ({ page }) => {
+test('User should unable to Login with empty fields and verify the “required” message appears', async ({ page }) => {
     await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
 
     await page.locator('.orangehrm-login-form input[name="username"]').fill('');
@@ -32,7 +32,7 @@ test('user can not login with empty credentials', async ({ page }) => {
     await expect(page.locator('.orangehrm-login-form .oxd-input-group__message').nth(1)) .toHaveText('Required');
 });
 
-test('user can log out from orangehrmlive', async ({ page }) => {
+test('User should be able to Logout and verify the correct URL after logged out', async ({ page }) => {
     await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
 
     await page.locator('.orangehrm-login-form input[name="username"]').fill('Admin');
