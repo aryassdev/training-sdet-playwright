@@ -7,7 +7,7 @@ test('user can log in to saucedemo', async ({ page }) => {
     await page.locator('[data-test="login-container"] [data-test="password"]').fill('secret_sauce');
     await page.locator('[data-test="login-container"] [data-test="login-button"]').click();
 
-    await expect(page.url()).toBe('https://www.saucedemo.com/inventory.html');
+    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
 });
 
 test('user cannot log in with invalid credentials', async ({ page }) => {
@@ -40,5 +40,5 @@ test('user can log out', async ({ page }) => {
     await page.locator('#menu_button_container #react-burger-menu-btn').click();
     await page.locator('#menu_button_container [data-test="logout-sidebar-link"]').click();
     
-    await expect(page.url()).toBe('https://www.saucedemo.com/');
+    await expect(page).toHaveURL('https://www.saucedemo.com/');
 });

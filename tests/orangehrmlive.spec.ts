@@ -7,7 +7,7 @@ test('user can log in to orangehrmlive', async ({ page }) => {
     await page.locator('.orangehrm-login-form input[name="password"]').fill('admin123');
     await page.locator('.orangehrm-login-form button[type="submit"]').click();
 
-    await expect(page.url()).toBe('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index');
+    await expect(page).toHaveURL('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index');
 });
 
 test('user can not login to orangehrmlive with invalid credentials', async ({ page }) => {
@@ -42,5 +42,5 @@ test('user can log out from orangehrmlive', async ({ page }) => {
     await page.locator('.oxd-topbar-header .oxd-userdropdown-tab .oxd-userdropdown-name').click();
     await page.locator('.oxd-topbar-header a[href="/web/index.php/auth/logout"]').click();
 
-    await expect(page.url()).toBe('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+    await expect(page).toHaveURL('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
 });
