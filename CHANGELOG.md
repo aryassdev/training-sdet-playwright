@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [V2.0.3] - 2025-11-07
+
+### Added
+- test: add test step into saucedemo cart spec
+
+### Changed
+- test: remove parent locator from saucedemo spec
+- test: remove parent locator from saucedemo sorting spec
+- test: remove parent locator from saucedemo cart spec
+- test: remove parent locator from orangehrm spec
+
 ## [V2.0.2] - 2025-11-07
 
 ### Documentation
@@ -50,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - test: add user can login test
 - build: setup playwright
 
+[V2.0.3]: https://github.com/aryassdev/training-sdet-playwright/compare/v2.0.2...v2.0.3
 [V2.0.2]: https://github.com/aryassdev/training-sdet-playwright/compare/v2.0.1...v2.0.2
 [V2.0.1]: https://github.com/aryassdev/training-sdet-playwright/compare/v2.0.0...v2.0.1
 [V2.0.0]: https://github.com/aryassdev/training-sdet-playwright/compare/v1.0.2...v2.0.0
