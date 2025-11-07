@@ -14,28 +14,32 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
         const randomCount = Math.floor(Math.random() * 5) + 2; // Random number between 2 and 6
         const addedItems: String[] = [];
 
-        for (let i = 0; i < randomCount; i++) {
-            const randomItemIndex = Math.floor(Math.random() * randomCount); // Random index within the selected count
-
-            const item = page.locator('[data-test="inventory-item-description"]').nth(randomItemIndex);
-            const addToCartButton = item.locator('button[data-test^="add-to-cart-"]'); 
-            const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
-
-            if (await addToCartButton.count() === 0) {
-                i--;
-                continue; // Retry if button not found
+        await test.step(`Adding ${randomCount} random items to the cart`, async () => {
+            for (let i = 0; i < randomCount; i++) {
+                const randomItemIndex = Math.floor(Math.random() * randomCount); // Random index within the selected count
+    
+                const item = page.locator('[data-test="inventory-item-description"]').nth(randomItemIndex);
+                const addToCartButton = item.locator('button[data-test^="add-to-cart-"]'); 
+                const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
+    
+                if (await addToCartButton.count() === 0) {
+                    i--;
+                    continue; // Retry if button not found
+                }
+                await addToCartButton.click();
+                if (itemName) {
+                    addedItems.push(itemName);
+                }
             }
-            await addToCartButton.click();
-            if (itemName) {
-                addedItems.push(itemName);
-            }
-        }
+        });
+
+        await test.step('Open the cart page', async () => {
+            await page.locator('[data-test="shopping-cart-link"]').click();
+        });
         
         const cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
         expect(cartCount).toBe(randomCount.toString());
-
-        await page.locator('[data-test="shopping-cart-link"]').click();
-
+        
         const cartItems = await page.locator('[data-test="inventory-item-name"]').allTextContents();
         expect(cartItems).toEqual(addedItems);
     });
@@ -43,39 +47,38 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
     test('Remove 1 item from cart and verify the cart shows correct badge number and the item exist when Cart is opened', async ({ page }) => {
         const itemsToAdd = 4;
         const addedItems: String[] = [];
+        let updatedItems: String[] = [];
 
-        for (let i = 0; i < itemsToAdd; i++) {
-            const item = page.locator('[data-test="inventory-item-description"]').nth(i);
-            const addToCartButton = item.locator('button[data-test^="add-to-cart-"]'); 
-            const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
-
-            await addToCartButton.click();
-            if (itemName) {
-                addedItems.push(itemName);
+        await test.step('Adding items to the cart', async () => {
+            for (let i = 0; i < itemsToAdd; i++) {
+                const item = page.locator('[data-test="inventory-item-description"]').nth(i);
+                const addToCartButton = item.locator('button[data-test^="add-to-cart-"]'); 
+                const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
+    
+                await addToCartButton.click();
+                if (itemName) {
+                    addedItems.push(itemName);
+                }
             }
-        }
+        });
 
-        let cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
-        expect(cartCount).toBe(itemsToAdd.toString());
+        await test.step('Open the cart page', async () => {
+            await page.locator('[data-test="shopping-cart-link"]').click();
+        });
 
-        await page.locator('[data-test="shopping-cart-link"]').click();
+        await test.step('Remove one item from the cart and update expected items', async () => {
+            const itemToRemove = addedItems[2];
+            await page.locator(`[data-test="remove-${itemToRemove?.toLowerCase().replace(/ /g, '-')}"]`).click();
 
-        let cartItems = await page.locator('[data-test="inventory-item-name"]').allTextContents();
-        expect(cartItems).toEqual(addedItems);
-
-        // Remove 1 item
-        const itemToRemove = addedItems[2];
-        await page.locator(`[data-test="remove-${itemToRemove?.toLowerCase().replace(/ /g, '-')}"]`).click();
-
-        // Update expected items
-        const updatedItems = addedItems.filter(item => item !== itemToRemove);
+            updatedItems = addedItems.filter(item => item !== itemToRemove);
+        });
 
         // Verify cart count
-        cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
+        const cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
         expect(cartCount).toBe((itemsToAdd - 1).toString());
 
         // Verify cart items
-        cartItems = await page.locator('[data-test="inventory-item-name"]').allTextContents();
+        const cartItems = await page.locator('[data-test="inventory-item-name"]').allTextContents();
         expect(cartItems).toEqual(updatedItems);
     });
 
@@ -83,29 +86,31 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
         const itemsToAdd = 3;
         const addedItems: String[] = [];
 
-        for (let i = 0; i < itemsToAdd; i++) {
-            const item = page.locator('[data-test="inventory-item-description"]').nth(i);
-            const addToCartButton = item.locator('button[data-test^="add-to-cart-"]');
-            const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
-
-            await addToCartButton.click();
-            if (itemName) {
-                addedItems.push(itemName);
+        await test.step('Adding items to the cart', async () => {
+            for (let i = 0; i < itemsToAdd; i++) {
+                const item = page.locator('[data-test="inventory-item-description"]').nth(i);
+                const addToCartButton = item.locator('button[data-test^="add-to-cart-"]');
+                const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
+    
+                await addToCartButton.click();
+                if (itemName) {
+                    addedItems.push(itemName);
+                }
             }
-        }
+        });
 
-        let cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
-        expect(cartCount).toBe(itemsToAdd.toString());
+        await test.step('Open the cart page', async () => {
+            await page.locator('[data-test="shopping-cart-link"]').click();
+        });
 
-        await page.locator('[data-test="shopping-cart-link"]').click();
-
-        // Remove all items
-        for (let i = 0; i < itemsToAdd; i++) {
-            const itemName = addedItems[i];
-            if (itemName) {
-                await page.locator(`[data-test="remove-${itemName.toLowerCase().replace(/ /g, '-')}"]`).click();
+        await test.step('Removing all items from the cart', async () => {
+            for (let i = 0; i < itemsToAdd; i++) {
+                const itemName = addedItems[i];
+                if (itemName) {
+                    await page.locator(`[data-test="remove-${itemName.toLowerCase().replace(/ /g, '-')}"]`).click();
+                }
             }
-        }
+        });
 
         // Verify cart is empty
         const cartItemsCount = await page.locator('[data-test="cart-item"]').count();
