@@ -4,10 +4,10 @@ test.describe('SauceDemo Sorting Tests', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('https://www.saucedemo.com/');
 
-        await page.locator('[data-test="login-container"] [data-test="username"]').fill('standard_user');
-        await page.locator('[data-test="login-container"] [data-test="password"]').fill('secret_sauce');
+        await page.locator('[data-test="username"]').fill('standard_user');
+        await page.locator('[data-test="password"]').fill('secret_sauce');
 
-        await page.locator('[data-test="login-container"] [data-test="login-button"]').click();
+        await page.locator('[data-test="login-button"]').click();
     });
 
     test('Sort items as Name A-Z and verify the item is sorted properly', async ({ page }) => {
