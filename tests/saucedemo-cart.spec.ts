@@ -4,10 +4,10 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('https://www.saucedemo.com/');
 
-        await page.locator('[data-test="login-container"] [data-test="username"]').fill('standard_user');
-        await page.locator('[data-test="login-container"] [data-test="password"]').fill('secret_sauce');
+        await page.locator('[data-test="username"]').fill('standard_user');
+        await page.locator('[data-test="password"]').fill('secret_sauce');
 
-        await page.locator('[data-test="login-container"] [data-test="login-button"]').click();
+        await page.locator('[data-test="login-button"]').click();
     });
 
     test('Select random item (2-6) Add to Cart and verify the cart shows correct badge number and the item exist when Cart is opened', async ({ page }) => {
@@ -17,7 +17,7 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
         for (let i = 0; i < randomCount; i++) {
             const randomItemIndex = Math.floor(Math.random() * randomCount); // Random index within the selected count
 
-            const item = page.locator('[data-test="inventory-list"] [data-test="inventory-item-description"]').nth(randomItemIndex);
+            const item = page.locator('[data-test="inventory-item-description"]').nth(randomItemIndex);
             const addToCartButton = item.locator('button[data-test^="add-to-cart-"]'); 
             const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
 
@@ -31,14 +31,12 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
             }
         }
         
-        const header = page.locator('[data-test="header-container"]');
-
-        const cartCount = await header.locator('[data-test="shopping-cart-badge"]').textContent();
+        const cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
         expect(cartCount).toBe(randomCount.toString());
 
-        await header.locator('[data-test="shopping-cart-link"]').click();
+        await page.locator('[data-test="shopping-cart-link"]').click();
 
-        const cartItems = await page.locator('[data-test="cart-list"] [data-test="inventory-item-name"]').allTextContents();
+        const cartItems = await page.locator('[data-test="inventory-item-name"]').allTextContents();
         expect(cartItems).toEqual(addedItems);
     });
 
@@ -47,7 +45,7 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
         const addedItems: String[] = [];
 
         for (let i = 0; i < itemsToAdd; i++) {
-            const item = page.locator('[data-test="inventory-list"] [data-test="inventory-item-description"]').nth(i);
+            const item = page.locator('[data-test="inventory-item-description"]').nth(i);
             const addToCartButton = item.locator('button[data-test^="add-to-cart-"]'); 
             const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
 
@@ -57,14 +55,12 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
             }
         }
 
-        const header = page.locator('[data-test="header-container"]');
-
-        let cartCount = await header.locator('[data-test="shopping-cart-badge"]').textContent();
+        let cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
         expect(cartCount).toBe(itemsToAdd.toString());
 
-        await header.locator('[data-test="shopping-cart-link"]').click();
+        await page.locator('[data-test="shopping-cart-link"]').click();
 
-        let cartItems = await page.locator('[data-test="cart-list"] [data-test="inventory-item-name"]').allTextContents();
+        let cartItems = await page.locator('[data-test="inventory-item-name"]').allTextContents();
         expect(cartItems).toEqual(addedItems);
 
         // Remove 1 item
@@ -75,11 +71,11 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
         const updatedItems = addedItems.filter(item => item !== itemToRemove);
 
         // Verify cart count
-        cartCount = await header.locator('[data-test="shopping-cart-badge"]').textContent();
+        cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
         expect(cartCount).toBe((itemsToAdd - 1).toString());
 
         // Verify cart items
-        cartItems = await page.locator('[data-test="cart-list"] [data-test="inventory-item-name"]').allTextContents();
+        cartItems = await page.locator('[data-test="inventory-item-name"]').allTextContents();
         expect(cartItems).toEqual(updatedItems);
     });
 
@@ -88,7 +84,7 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
         const addedItems: String[] = [];
 
         for (let i = 0; i < itemsToAdd; i++) {
-            const item = page.locator('[data-test="inventory-list"] [data-test="inventory-item-description"]').nth(i);
+            const item = page.locator('[data-test="inventory-item-description"]').nth(i);
             const addToCartButton = item.locator('button[data-test^="add-to-cart-"]');
             const itemName = await item.locator('[data-test="inventory-item-name"]').textContent();
 
@@ -98,12 +94,10 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
             }
         }
 
-        const header = page.locator('[data-test="header-container"]');
-
-        let cartCount = await header.locator('[data-test="shopping-cart-badge"]').textContent();
+        let cartCount = await page.locator('[data-test="shopping-cart-badge"]').textContent();
         expect(cartCount).toBe(itemsToAdd.toString());
 
-        await header.locator('[data-test="shopping-cart-link"]').click();
+        await page.locator('[data-test="shopping-cart-link"]').click();
 
         // Remove all items
         for (let i = 0; i < itemsToAdd; i++) {
@@ -114,10 +108,10 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
         }
 
         // Verify cart is empty
-        const cartItemsCount = await page.locator('[data-test="cart-list"] [data-test="cart-item"]').count();
+        const cartItemsCount = await page.locator('[data-test="cart-item"]').count();
         expect(cartItemsCount).toBe(0);
 
-        const cartBadge = header.locator('[data-test="shopping-cart-badge"]');
+        const cartBadge = page.locator('[data-test="shopping-cart-badge"]');
         expect(await cartBadge.count()).toBe(0);
     });
 });
