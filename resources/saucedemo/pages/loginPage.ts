@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { loginPageSelectors } from "../selectors/loginSelectors";
+import { loginSelectors } from "../selectors/loginSelectors";
 
 export class LoginPage {
     private page: Page;
@@ -8,10 +8,12 @@ export class LoginPage {
         this.page = page;
     }
 
-    get usernameInput() { return this.page.locator(loginPageSelectors.usernameInput); }
-    get passwordInput() { return this.page.locator(loginPageSelectors.passwordInput); }
-    get loginButton() { return this.page.locator(loginPageSelectors.loginButton); }
-    get errorMessage() { return this.page.locator(loginPageSelectors.errorMessage); }
+    get usernameInput() { return this.page.locator(loginSelectors.usernameInput); }
+    get passwordInput() { return this.page.locator(loginSelectors.passwordInput); }
+    get loginButton() { return this.page.locator(loginSelectors.loginButton); }
+    get logoutButton() { return this.page.locator(loginSelectors.logoutButton); }
+    get errorMessage() { return this.page.locator(loginSelectors.errorMessage); }
+    get burgerMenuButton() { return this.page.locator(loginSelectors.burgerMenuButton); }
 
     async login(username: string, password: string) {
         await test.step('Input username and password', async () => {
@@ -26,8 +28,8 @@ export class LoginPage {
 
     async logout() {
         await test.step('Logout from the site', async () => {
-            await this.page.locator('#react-burger-menu-btn').click();
-            await this.page.locator('[data-test="logout-sidebar-link"]').click();
+            await this.burgerMenuButton.click();
+            await this.logoutButton.click();
         });
     }
 

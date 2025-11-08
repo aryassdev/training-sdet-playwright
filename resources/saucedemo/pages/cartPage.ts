@@ -1,5 +1,5 @@
-import test, { expect, type Page } from "@playwright/test";
-import { cartPageSelectors } from "../selectors/cartSelectors";
+import { test, expect, type Page } from "@playwright/test";
+import { cartSelectors } from "../selectors/cartSelectors";
 import { SharedSelectors } from "../selectors/sharedSelectors";
 
 export class CartPage {
@@ -11,8 +11,8 @@ export class CartPage {
 
     get itemName() { return this.page.locator(SharedSelectors.itemName); }
 
-    get openCartButton() { return this.page.locator(cartPageSelectors.openCartButton); }
-    get cartBadge() { return this.page.locator(cartPageSelectors.cartBadge); }
+    get openCartButton() { return this.page.locator(cartSelectors.openCartButton); }
+    get cartBadge() { return this.page.locator(cartSelectors.cartBadge); }
 
     async addItemsToCart(minItemsCount: number = 1, maxItemsCount: number = 1) {
         return await test.step('Add random items to cart', async () => {
@@ -21,7 +21,7 @@ export class CartPage {
 
             for (let i = 0; i < randomCount; i++) {
                 const itemName = await this.page.locator(SharedSelectors.itemName).nth(i).textContent();
-                const addToCartButton = this.page.locator(cartPageSelectors.addToCartButton(itemName!));
+                const addToCartButton = this.page.locator(cartSelectors.addToCartButton(itemName!));
 
                 if (await addToCartButton.count() === 0) {
                     i--;
@@ -40,7 +40,7 @@ export class CartPage {
     async removeItemFromCart(itemIndex: number, itemNames: string[]) {
         return await test.step(`Remove item from cart`, async () => {
             const removedItemName = itemNames[itemIndex];
-            await this.page.locator(cartPageSelectors.removeFromCartButton(removedItemName!)).click();
+            await this.page.locator(cartSelectors.removeFromCartButton(removedItemName!)).click();
 
             const updatedItems = itemNames.filter(name => name !== removedItemName);
 

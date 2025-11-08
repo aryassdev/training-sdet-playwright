@@ -1,4 +1,4 @@
-export const cartPageSelectors = {
+export const cartSelectors = {
     addToCartButton: (name: string) => `button[data-test="add-to-cart-${name?.toLowerCase().replace(/ /g, '-')}"]`,
     removeFromCartButton: (name: string) => `button[data-test="remove-${name?.toLowerCase().replace(/ /g, '-')}"]`,
 
