@@ -1,8 +1,9 @@
 import { test } from '@playwright/test';
-import { LoginPage } from '../resources/pages/loginPage';
+import { LoginPage } from '../../resources/saucedemo/pages/loginPage';
 
 test('User should be able to Login with valid credentials and verify the correct URL after logged in', async ({ page }) => {
     const loginPage = new LoginPage(page);
+
     await loginPage.navigate();
     await loginPage.login('standard_user', 'secret_sauce');
 
@@ -11,6 +12,7 @@ test('User should be able to Login with valid credentials and verify the correct
 
 test('User should unable to Login with invalid credentials and verify the “Username and password do not match any user in this service” message appears', async ({ page }) => {
     const loginPage = new LoginPage(page);
+
     await loginPage.navigate();
     await loginPage.login('wrong_user', 'wrong_password');
 
@@ -19,6 +21,7 @@ test('User should unable to Login with invalid credentials and verify the “Use
 
 test('User should unable to Login with empty fields and verify the “Username is required” message appears', async ({ page }) => {
     const loginPage = new LoginPage(page);
+
     await loginPage.navigate();
     await loginPage.login('', 'secret_sauce');
 
@@ -27,6 +30,7 @@ test('User should unable to Login with empty fields and verify the “Username i
 
 test('User should be able to Logout and verify the correct URL after logged out', async ({ page }) => {
     const loginPage = new LoginPage(page);
+    
     await loginPage.navigate();
     await loginPage.login('standard_user', 'secret_sauce');
     

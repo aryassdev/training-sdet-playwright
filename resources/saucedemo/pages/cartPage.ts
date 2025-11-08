@@ -1,5 +1,6 @@
 import test, { expect, type Page } from "@playwright/test";
 import { cartPageSelectors } from "../selectors/cartSelectors";
+import { SharedSelectors } from "../selectors/sharedSelectors";
 
 export class CartPage {
     private page: Page;
@@ -8,7 +9,7 @@ export class CartPage {
         this.page = page;
     }
 
-    get inventoryItemName() { return this.page.locator(cartPageSelectors.inventoryItemName); }
+    get itemName() { return this.page.locator(SharedSelectors.itemName); }
 
     get openCartButton() { return this.page.locator(cartPageSelectors.openCartButton); }
     get cartBadge() { return this.page.locator(cartPageSelectors.cartBadge); }
@@ -19,7 +20,7 @@ export class CartPage {
             const addedItemNames: string[] = [];
 
             for (let i = 0; i < randomCount; i++) {
-                const itemName = await this.page.locator(cartPageSelectors.inventoryItemName).nth(i).textContent();
+                const itemName = await this.page.locator(SharedSelectors.itemName).nth(i).textContent();
                 const addToCartButton = this.page.locator(cartPageSelectors.addToCartButton(itemName!));
 
                 if (await addToCartButton.count() === 0) {
@@ -73,7 +74,7 @@ export class CartPage {
 
     async verifyCartItems(expectedItems: string[]) {
         await test.step('Verify cart items', async () => {
-            const cartItems = await this.inventoryItemName.allTextContents();
+            const cartItems = await this.itemName.allTextContents();
             
             expect(cartItems).toEqual(expectedItems);
         });

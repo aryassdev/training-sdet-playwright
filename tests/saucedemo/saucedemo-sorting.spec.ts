@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import { LoginPage } from "../resources/pages/loginPage";
-import { SortingPage } from "../resources/pages/sortingPage";
+import { LoginPage } from "../../resources/saucedemo/pages/loginPage";
+import { SortingPage } from "../../resources/saucedemo/pages/sortingPage";
 
 test.describe('SauceDemo Sorting Tests', () => {
     test.beforeEach(async ({ page }) => {

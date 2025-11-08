@@ -1,5 +1,6 @@
 import test, { expect, type Page } from "@playwright/test";
 import { sortingPageSelectors } from "../selectors/sortingSelectors";
+import { SharedSelectors } from "../selectors/sharedSelectors";
 
 export class SortingPage {
     private page: Page;
@@ -8,8 +9,8 @@ export class SortingPage {
         this.page = page;
     }
 
-    get itemName() { return this.page.locator(sortingPageSelectors.itemName); }
-    get itemPrice() { return this.page.locator(sortingPageSelectors.itemPrice); }
+    get itemName() { return this.page.locator(SharedSelectors.itemName); }
+    get itemPrice() { return this.page.locator(SharedSelectors.itemPrice); }
     get sortingOptions() { return this.page.locator(sortingPageSelectors.sortingOptions); }
 
     async selectSortingOption(sortingValue: string, sortingLabel: string) {

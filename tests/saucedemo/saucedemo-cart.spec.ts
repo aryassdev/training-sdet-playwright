@@ -1,10 +1,11 @@
 import { test } from '@playwright/test';
-import { LoginPage } from '../resources/pages/loginPage';
-import { CartPage } from '../resources/pages/cartPage';
+import { LoginPage } from '../../resources/saucedemo/pages/loginPage';
+import { CartPage } from '../../resources/saucedemo/pages/cartPage';
 
 test.describe('SauceDemo Cart Functionality Tests', () => {
     test.beforeEach(async ({ page }) => {
         const loginPage = new LoginPage(page);
+        
         await loginPage.navigate();
         await loginPage.login('standard_user', 'secret_sauce');
 
