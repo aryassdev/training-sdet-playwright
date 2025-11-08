@@ -1,87 +1,57 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import { LoginPage } from "../resources/pages/loginPage";
+import { SortingPage } from "../resources/pages/sortingPage";
 
 test.describe('SauceDemo Sorting Tests', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('https://www.saucedemo.com/');
+        const loginPage = new LoginPage(page);
+        await loginPage.navigate();
+        await loginPage.login('standard_user', 'secret_sauce');
 
-        await page.locator('[data-test="username"]').fill('standard_user');
-        await page.locator('[data-test="password"]').fill('secret_sauce');
-
-        await page.locator('[data-test="login-button"]').click();
+        await loginPage.verifyUrl('https://www.saucedemo.com/inventory.html');
     });
 
     test('Sort items as Name A-Z and verify the item is sorted properly', async ({ page }) => {
-        let sortedNames: string[] = [];
-        let afterSortItemNames: string[] = [];
+        const sortingPage = new SortingPage(page);
 
-        await test.step('Get initial item names and sort them', async () => {
-            const itemNames = await page.locator('[data-test="inventory-item-name"]').allTextContents();
-            sortedNames = [...itemNames].sort();
-        });
+        const expectedItemNames = await sortingPage.getItemNames('asc');
         
-        await test.step('Select A-Z sorting option', async () => {
-            await page.locator('[data-test="product-sort-container"]').selectOption('az');
-            afterSortItemNames = await page.locator('[data-test="inventory-item-name"]').allTextContents();
-        });
+        await sortingPage.selectSortingOption('az', 'A-Z');
+        const sortedItemNames = await sortingPage.getItemNames();
 
-        expect(afterSortItemNames).toEqual(sortedNames);
+        await sortingPage.verifyEqual(sortedItemNames, expectedItemNames);
     });
 
     test('Sort items as Name Z-A and verify the item is sorted properly', async ({ page }) => {
-        let sortedNames: string[] = [];
-        let afterSortItemNames: string[] = [];
+        const sortingPage = new SortingPage(page);
 
-        await test.step('Get initial item names and sort them in reverse', async () => {
-            const itemNames = await page.locator('[data-test="inventory-item-name"]').allTextContents();
-            sortedNames = [...itemNames].sort().reverse();
-        });
+        const expectedItemNames = await sortingPage.getItemNames('desc');
 
-        await test.step('Select Z-A sorting option', async () => {
-            await page.locator('[data-test="product-sort-container"]').selectOption('za');
-            afterSortItemNames = await page.locator('[data-test="inventory-item-name"]').allTextContents();
-        });
+        await sortingPage.selectSortingOption('za', 'Z-A');
+        const sortedItemNames = await sortingPage.getItemNames();
 
-        expect(afterSortItemNames).toEqual(sortedNames);
+        await sortingPage.verifyEqual(expectedItemNames, sortedItemNames);
     });
 
     test('Sort items as Price Low-High and verify the item is sorted properly', async ({ page }) => {
-        let sortedPrices: string[] = [];
-        let afterSortItemPrices: string[] = [];
+        const sortingPage = new SortingPage(page);
 
-        await test.step('Get initial item prices and sort them', async () => {
-            const itemPrices = await page.locator('[data-test="inventory-item-price"]').allTextContents();
-            sortedPrices = itemPrices
-                .map(price => parseFloat(price.replace('$', '')))
-                .sort((a, b) => a - b)
-                .map(price => `$${price.toFixed(2)}`);
-        });
+        const expectedItemPrices = await sortingPage.getItemPrices('asc');
 
-        await test.step('Select Low-High sorting option', async () => {
-            await page.locator('[data-test="product-sort-container"]').selectOption('lohi');
-            afterSortItemPrices = await page.locator('[data-test="inventory-item-price"]').allTextContents();
-        });
+        await sortingPage.selectSortingOption('lohi','Low-High');
+        const sortedItemPrices = await sortingPage.getItemPrices();
 
-        expect(afterSortItemPrices).toEqual(sortedPrices);
+        await sortingPage.verifyEqual(expectedItemPrices, sortedItemPrices);
     });
 
     test('Sort items as Price High-Low and verify the item is sorted properly', async ({ page }) => {
-        let sortedPrices: string[] = [];
-        let afterSortItemPrices: string[] = [];
+        const sortingPage = new SortingPage(page);
 
-        await test.step('Get initial item prices and sort them in reverse', async () => {
-            const itemPrices = await page.locator('[data-test="inventory-item-price"]').allTextContents();
-            sortedPrices = itemPrices
-                .map(price => parseFloat(price.replace('$', '')))
-                .sort((a, b) => a - b)
-                .reverse()
-                .map(price => `$${price.toFixed(2)}`);
-        });
+        const expectedItemPrices = await sortingPage.getItemPrices('desc');
+        
+        await sortingPage.selectSortingOption('hilo', 'High-Low');
+        const sortedItemPrices = await sortingPage.getItemPrices();
 
-        await test.step('Select High-Low sorting option', async () => {
-            await page.locator('[data-test="product-sort-container"]').selectOption('hilo');
-            afterSortItemPrices = await page.locator('[data-test="inventory-item-price"]').allTextContents();
-        });
-
-        expect(afterSortItemPrices).toEqual(sortedPrices);
+        await sortingPage.verifyEqual(expectedItemPrices, sortedItemPrices);
     });
 });
