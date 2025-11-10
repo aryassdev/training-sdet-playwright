@@ -16,7 +16,7 @@ test('User should unable to Login with invalid credentials and verify the “Use
     const loginPage = new LoginPage(page);
 
     await loginPage.navigate(commonConfig.baseUrl);
-    await loginPage.login('wrong_user', 'wrong_password');
+    await loginPage.login(credentialConfig.wrongUsername, credentialConfig.wrongPassword);
 
     await loginPage.verifyErrorMessage('Username and password do not match any user in this service');
 });
