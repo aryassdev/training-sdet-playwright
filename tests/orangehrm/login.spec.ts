@@ -18,7 +18,7 @@ test('User should unable to Login with invalid credentials and verify the “Inv
 
     await loginPage.navigate(`${commonConfig.baseUrl}/auth/login`);
 
-    await loginPage.login('some_user', 'some_password');
+    await loginPage.login(credentialConfig.wrongUsername, credentialConfig.wrongPassword);
 
     await loginPage.verifyErrorInformation('Invalid credentials');
 })
