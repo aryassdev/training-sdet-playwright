@@ -1,4 +1,4 @@
-import test, { expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { sortingSelectors } from "../selectors/sortingSelectors";
 import { SharedSelectors } from "../selectors/sharedSelectors";
 
