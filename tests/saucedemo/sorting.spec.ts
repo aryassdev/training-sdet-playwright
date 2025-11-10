@@ -1,14 +1,16 @@
 import { test } from "@playwright/test";
 import { LoginPage } from "../../resources/saucedemo/pages/loginPage";
 import { SortingPage } from "../../resources/saucedemo/pages/sortingPage";
+import { commonConfig } from "../../config/saucedemo/common";
+import { credentialConfig } from "../../config/saucedemo/credentials";
 
 test.describe('SauceDemo Sorting Tests', () => {
     test.beforeEach(async ({ page }) => {
         const loginPage = new LoginPage(page);
-        await loginPage.navigate();
-        await loginPage.login('standard_user', 'secret_sauce');
+        await loginPage.navigate(commonConfig.baseUrl);
+        await loginPage.login(credentialConfig.username, credentialConfig.password);
 
-        await loginPage.verifyUrl('https://www.saucedemo.com/inventory.html');
+        await loginPage.verifyUrl(`${commonConfig.baseUrl}/inventory.html`);
     });
 
     test('Sort items as Name A-Z and verify the item is sorted properly', async ({ page }) => {

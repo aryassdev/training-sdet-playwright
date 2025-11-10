@@ -33,9 +33,9 @@ export class LoginPage {
         });
     }
 
-    async navigate() {
-        await test.step('Navigate to Login Page', async () => {
-            await this.page.goto('https://www.saucedemo.com/');
+    async navigate(url: string) {
+        await test.step(`Navigate to ${url}`, async () => {
+            await this.page.goto(url);
         });
     }
 
