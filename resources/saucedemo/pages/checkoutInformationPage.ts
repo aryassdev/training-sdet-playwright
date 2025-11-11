@@ -13,14 +13,14 @@ export class CheckoutInformationPage {
     get postalCodeInput() { return this.page.locator(checkoutSelectors.postalCodeInput); }
     get continueButton() { return this.page.getByRole(checkoutSelectors.continueButton.role, { name: checkoutSelectors.continueButton.name }); }
 
-    async addCheckoutDetails(firstName: string, lastName: string, postalCode: string) {
-        await test.step('Input checkout detals', async () => {
+    async addCheckoutDetails(firstName: string, lastName: string, postalCode: string): Promise<void> {
+        await test.step('Input checkout details', async (): Promise<void> => {
             await this.firstnameInput.fill(firstName);
             await this.lastnameInput.fill(lastName);
             await this.postalCodeInput.fill(postalCode);
         });
 
-        await test.step('Click continue button', async () => {
+        await test.step('Click continue button', async (): Promise<void> => {
             await this.continueButton.click();
         });
     }

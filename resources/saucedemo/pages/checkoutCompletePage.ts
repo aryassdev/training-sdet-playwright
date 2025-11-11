@@ -11,8 +11,8 @@ export class CheckoutCompletePage {
     get orderMessage() { return this.page.getByRole(checkoutSelectors.orderMessage.role, { name: checkoutSelectors.orderMessage.name }); }
     get backHomeButton() { return this.page.getByRole(checkoutSelectors.backHomeButton.role, { name: checkoutSelectors.backHomeButton.name }); }
 
-    async verifyOrderCompletion(message: string) {
-        test.step(`Verify order completion with message: ${message}`, async () => {
+    async verifyOrderCompletion(message: string): Promise<void> {
+        test.step(`Verify order completion with message: ${message}`, async (): Promise<void> => {
             await this.orderMessage.waitFor({ state: 'visible' });
     
             await expect(this.orderMessage).toBeVisible();
@@ -20,8 +20,8 @@ export class CheckoutCompletePage {
         });
     }
 
-    async backToHome() {
-        test.step('Navigate back to home page from order completion page', async () => {
+    async backToHome(): Promise<void> {
+        test.step('Navigate back to home page from order completion page', async (): Promise<void> => {
             await this.backHomeButton.click();
         });
     }

@@ -14,8 +14,8 @@ export class CheckoutOverviewPage {
     get totalPrice() { return this.page.locator(checkoutSelectors.totalPrice); }
     get finishButton() { return this.page.getByRole(checkoutSelectors.finishButton.role, { name: checkoutSelectors.finishButton.name }); }
 
-    async getTotalPrice() {
-        return await test.step('Get total prices of items', async () => {
+    async getTotalPrice(): Promise<string> {
+        return await test.step('Get total prices of items', async (): Promise<string> => {
             const itemPrices = await this.itemPrice.allTextContents();
             const totalPrices = itemPrices
                 .map(price => parseFloat(price.replace('$', '')))
@@ -25,28 +25,28 @@ export class CheckoutOverviewPage {
         });
     }
 
-    async getItemQuantities() {
-        return await test.step('Get list of item quantities', async () => {
+    async getItemQuantities(): Promise<string[]> {
+        return await test.step('Get list of item quantities', async (): Promise<string[]> => {
             const itemQuantities = await this.itemQuantity.allTextContents();
             return itemQuantities;
         });
     }
 
-    async finishCheckout() {
-        await test.step('Click finish button', async () => {
+    async finishCheckout(): Promise<void> {
+        await test.step('Click finish button', async (): Promise<void> => {
             await this.finishButton.click();
         });
     }
-    async verifyCartItemQuantities(expectedQuantity: string[]) {
-        await test.step('Verify cart items quantity', async () => {
+    async verifyCartItemQuantities(expectedQuantity: string[]): Promise<void> {
+        await test.step('Verify cart items quantity', async (): Promise<void> => {
             const itemQuantities = await this.itemQuantity.allTextContents();
 
             expect(itemQuantities).toEqual(expectedQuantity);
         });
     }
 
-    async verifyTotalPrice(expectedTotal: string) {
-        await test.step('Verify total price', async () => {
+    async verifyTotalPrice(expectedTotal: string): Promise<void> {
+        await test.step('Verify total price', async (): Promise<void> => {
             const totalPrice = await this.totalPrice.textContent();
 
             expect(totalPrice).toContain(expectedTotal);
