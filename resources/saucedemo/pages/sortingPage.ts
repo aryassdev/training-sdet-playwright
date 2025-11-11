@@ -13,14 +13,14 @@ export class SortingPage {
     get itemPrice() { return this.page.locator(SharedSelectors.itemPrice); }
     get sortingOptions() { return this.page.locator(sortingSelectors.sortingOptions); }
 
-    async selectSortingOption(sortingValue: string, sortingLabel: string) {
-        await test.step(`Select ${sortingLabel} sorting option`, async () => {
+    async selectSortingOption(sortingValue: string, sortingLabel: string): Promise<void> {
+        await test.step(`Select ${sortingLabel} sorting option`, async (): Promise<void> => {
             await this.sortingOptions.selectOption(sortingValue)
         });
     }
 
-    async getItemNames(sortOrder?: string) {
-        return await test.step('Get list of item names, and optionally sort them', async () => {
+    async getItemNames(sortOrder?: string): Promise<string[]> {
+        return await test.step('Get list of item names, and optionally sort them', async (): Promise<string[]> => {
             const itemNames = await this.itemName.allTextContents();
 
             switch (sortOrder) {
@@ -34,8 +34,8 @@ export class SortingPage {
         });
     }
 
-    async getItemPrices(sortOrder?: string) {
-        return await test.step('Get list of item prices, and optionally sort them', async () => {
+    async getItemPrices(sortOrder?: string): Promise<string[]> {
+        return await test.step('Get list of item prices, and optionally sort them', async (): Promise<string[]> => {
             const itemPrices = await this.itemPrice.allTextContents();
 
             switch (sortOrder) {
@@ -56,8 +56,8 @@ export class SortingPage {
         });
     }
 
-    async verifyEqual(expectedItem: string[], actualItem: string[]) {
-        await test.step('Verify content is equal', async () => {
+    async verifyEqual(expectedItem: string[], actualItem: string[]): Promise<void> {
+        await test.step('Verify content is equal', async (): Promise<void> => {
             expect(actualItem).toEqual(expectedItem)
         });
     }
