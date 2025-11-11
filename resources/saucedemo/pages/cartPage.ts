@@ -20,7 +20,9 @@ export class CartPage {
             const addedItemNames: string[] = [];
 
             for (let i = 0; i < randomCount; i++) {
-                const itemName = await this.page.locator(SharedSelectors.itemName).nth(i).textContent();
+                const index = Math.floor(Math.random() * randomCount); // Random index within the selected count
+
+                const itemName = await this.page.locator(SharedSelectors.itemName).nth(index).textContent();
                 const addToCartButton = this.page.locator(cartSelectors.addToCartButton(itemName!));
 
                 if (await addToCartButton.count() === 0) {
@@ -51,6 +53,12 @@ export class CartPage {
     async openCart() {
         await test.step('Open the cart page', async () => {
             await this.openCartButton.click();
+        });
+    }
+    
+    async checkOut() {
+        await test.step('Proceed to checkout', async () => {
+            await this.page.getByRole(cartSelectors.checkOutButton.role, { name: cartSelectors.checkOutButton.name }).click();
         });
     }
 

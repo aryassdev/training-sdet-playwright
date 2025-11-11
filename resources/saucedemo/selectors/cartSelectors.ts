@@ -4,4 +4,6 @@ export const cartSelectors = {
 
     openCartButton: '[data-test="shopping-cart-link"]',
     cartBadge: '[data-test="shopping-cart-badge"]',
+
+    checkOutButton: { role: 'button' as const, name: 'Checkout' },
 };
