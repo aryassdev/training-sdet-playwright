@@ -60,7 +60,11 @@ test('SauceDemo full user flow', async ({ page }) => {
 
         verifyUrl(page, `${commonConfig.baseUrl}/checkout-step-one.html`);
 
-        await checkoutInformationPage.addCheckoutDetails('John', 'Doe', '12345');
+        await checkoutInformationPage.addCheckoutDetails(
+            credentialConfig.checkoutFirstname,
+            credentialConfig.checkoutLastname,
+            credentialConfig.checkoutPostcode
+        );
 
         await verifyUrl(page, `${commonConfig.baseUrl}/checkout-step-two.html`);
     });
