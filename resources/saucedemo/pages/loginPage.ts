@@ -8,9 +8,9 @@ export class LoginPage {
         this.page = page;
     }
 
-    get usernameInput() { return this.page.locator(loginSelectors.usernameInput); }
-    get passwordInput() { return this.page.locator(loginSelectors.passwordInput); }
-    get loginButton() { return this.page.locator(loginSelectors.loginButton); }
+    get usernameInput() { return this.page.getByRole(loginSelectors.usernameInput.role, { name: loginSelectors.usernameInput.name }); }
+    get passwordInput() { return this.page.getByRole(loginSelectors.passwordInput.role, { name: loginSelectors.passwordInput.name }); }
+    get loginButton() { return this.page.getByRole(loginSelectors.loginButton.role, { name: loginSelectors.loginButton.name }); }
     get logoutButton() { return this.page.locator(loginSelectors.logoutButton); }
     get errorMessage() { return this.page.locator(loginSelectors.errorMessage); }
     get burgerMenuButton() { return this.page.locator(loginSelectors.burgerMenuButton); }
