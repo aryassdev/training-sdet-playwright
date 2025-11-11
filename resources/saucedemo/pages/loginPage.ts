@@ -15,26 +15,26 @@ export class LoginPage {
     get errorMessage() { return this.page.locator(loginSelectors.errorMessage); }
     get burgerMenuButton() { return this.page.locator(loginSelectors.burgerMenuButton); }
 
-    async login(username: string, password: string) {
-        await test.step('Input username and password', async () => {
+    async login(username: string, password: string): Promise<void> {
+        await test.step('Input username and password', async (): Promise<void> => {
             await this.usernameInput.fill(username);
             await this.passwordInput.fill(password);
         });
 
-        await test.step('Click login button', async () => {
+        await test.step('Click login button', async (): Promise<void> => {
             await this.loginButton.click();
         });
     }
 
-    async logout() {
-        await test.step('Logout from the site', async () => {
+    async logout(): Promise<void> {
+        await test.step('Logout from the site', async (): Promise<void> => {
             await this.burgerMenuButton.click();
             await this.logoutButton.click();
         });
     }
 
-    async verifyErrorMessage(expectedErrorMessage: string) {
-        await test.step(`Verify error message is "${expectedErrorMessage}"`, async () => {
+    async verifyErrorMessage(expectedErrorMessage: string): Promise<void> {
+        await test.step(`Verify error message is "${expectedErrorMessage}"`, async (): Promise<void> => {
             const errorLocator = this.errorMessage;
             await errorLocator.waitFor({ state: 'visible' });
 
