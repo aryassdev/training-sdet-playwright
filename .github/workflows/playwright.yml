@@ -18,6 +18,13 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
+      env:
+        SAUCEDEMO_BASE_URL: ${{ secrets.SAUCEDEMO_BASE_URL }}
+        SAUCEDEMO_USERNAME: ${{ secrets.SAUCEDEMO_USERNAME }}
+        SAUCEDEMO_PASSWORD: ${{ secrets.SAUCEDEMO_PASSWORD }}
+        ORANGEHRM_BASE_URL: ${{ secrets.ORANGEHRM_BASE_URL }}
+        ORANGEHRM_USERNAME: ${{ secrets.ORANGEHRM_USERNAME }}
+        ORANGEHRM_PASSWORD: ${{ secrets.ORANGEHRM_PASSWORD }}
       run: npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
