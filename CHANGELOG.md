@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [V4.0.1]
+## [V4.0.2] - 2025-11-11
+
+### Documentation
+- docs: update changelog
+
+## [V4.0.1] - 2025-11-11
 
 ### Build
 - build: setup env for github workflow
@@ -88,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - test: add user can login test
 - build: setup playwright
 
+[v4.0.2]: https://github.com/aryassdev/training-sdet-playwright/compare/v4.0.1...v4.0.2
 [v4.0.1]: https://github.com/aryassdev/training-sdet-playwright/compare/v4.0.0...v4.0.1
 [v4.0.0]: https://github.com/aryassdev/training-sdet-playwright/compare/v3.0.0...v4.0.0
 [v3.0.0]: https://github.com/aryassdev/training-sdet-playwright/compare/v2.0.3...v3.0.0
