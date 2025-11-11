@@ -16,12 +16,6 @@ export class LoginPage {
     get errorMessage() { return this.page.locator(loginPageSelectors.errorMessage); }
     get errorInformation() { return this.page.locator(loginPageSelectors.errorInformation); }
 
-    async navigate(url: string) {
-        await test.step(`Navigate to ${url}`, async () => {
-            await this.page.goto(url);
-        });
-    }
-
     async login(username: string, password: string) {
         await test.step('Input username and password', async () => {
             await this.usernameInput.fill(username);
@@ -38,16 +32,6 @@ export class LoginPage {
             await this.dropdownMenu.click();
             await this.logoutButton.click();
         });
-    }
-
-    async verifyUrl(expectedUrl: string) {
-        await this.page.waitForURL(expectedUrl);
-        await this.page.waitForLoadState('domcontentloaded');
-
-        const currentUrl = this.page.url();
-
-        expect(currentUrl).not.toBe('');
-        expect(currentUrl).toBe(expectedUrl);
     }
 
     async verifyErrorMessage(expectedErrorMessage: string) {

@@ -3,15 +3,16 @@ import { LoginPage } from '../../resources/saucedemo/pages/loginPage';
 import { CartPage } from '../../resources/saucedemo/pages/cartPage';
 import { commonConfig } from '../../config/saucedemo/common';
 import { credentialConfig } from '../../config/saucedemo/credentials';
+import { navigateUrl, verifyUrl } from '../../resources/common/helpers/navigation';
 
 test.describe('SauceDemo Cart Functionality Tests', () => {
     test.beforeEach(async ({ page }) => {
         const loginPage = new LoginPage(page);
 
-        await loginPage.navigate(commonConfig.baseUrl);
+        await navigateUrl(page, commonConfig.baseUrl);
         await loginPage.login(credentialConfig.username, credentialConfig.password);
 
-        await loginPage.verifyUrl(`${commonConfig.baseUrl}/inventory.html`);
+        await verifyUrl(page, `${commonConfig.baseUrl}/inventory.html`);
     });
 
     test('Select random item (2-6) Add to Cart and verify the cart shows correct badge number and the item exist when Cart is opened', async ({ page }) => {

@@ -33,24 +33,6 @@ export class LoginPage {
         });
     }
 
-    async navigate(url: string) {
-        await test.step(`Navigate to ${url}`, async () => {
-            await this.page.goto(url);
-        });
-    }
-
-    async verifyUrl(expectedUrl: string) {
-        await test.step(`Verify URL is ${expectedUrl}`, async () => {
-            await this.page.waitForURL(expectedUrl);
-            await this.page.waitForLoadState('domcontentloaded');
-
-            const currentUrl = this.page.url();
-
-            expect(currentUrl).not.toBe('');
-            expect(currentUrl).toBe(expectedUrl);
-        });
-    }
-
     async verifyErrorMessage(expectedErrorMessage: string) {
         await test.step(`Verify error message is "${expectedErrorMessage}"`, async () => {
             const errorLocator = this.errorMessage;
