@@ -27,6 +27,23 @@ export class CartPage {
         return this.page.locator(SharedSelectors.itemName).nth(index)
     }
 
+    async addItemsAtToCart(indexes: number[]): Promise<string[]> {
+        return await test.step('Add selected items to cart', async (): Promise<string[]> => {
+            const addedItemNames: string[] = [];
+
+            for (let i = 0; i < indexes.length; i++) {
+                const index = indexes[i];
+                const itemName = await this.itemNameAt(index - 1).textContent();
+                const addToCartButton = this.addToCartButton(itemName!);
+
+                await addToCartButton.click();
+                addedItemNames.push(itemName!);
+            }
+
+            return addedItemNames;
+        });
+    }
+
     async addItemsToCart(minItemsCount: number = 1, maxItemsCount: number = 1): Promise<string[]> {
         return await test.step('Add random items to cart', async (): Promise<string[]> => {
             const randomCount = Math.floor(Math.random() * (maxItemsCount - minItemsCount + 1)) + minItemsCount; // Random number between 2 and 6

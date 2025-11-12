@@ -1,4 +1,4 @@
-import test from "@playwright/test";
+import test, { Page } from "@playwright/test";
 import { LoginPage } from "../../resources/saucedemo/pages/loginPage";
 import { navigateUrl, verifyUrl } from "../../resources/common/helpers/navigation";
 import { commonConfig } from "../../config/saucedemo/common";
@@ -8,13 +8,18 @@ import { CartPage } from "../../resources/saucedemo/pages/cartPage";
 import { CheckoutInformationPage } from "../../resources/saucedemo/pages/checkoutInformationPage";
 import { CheckoutOverviewPage } from "../../resources/saucedemo/pages/checkoutOverviewPage";
 import { CheckoutCompletePage } from "../../resources/saucedemo/pages/checkoutCompletePage";
+import { selectItemData } from "../../resources/saucedemo/data/selectItemData";
 
-test('SauceDemo full user flow @critical', async ({ page }) => {
+const runTest = (data: { name: string; itemIndexes: number[] }) => test(`SauceDemo full user flow @critical: ${data.name}`, async ({ page }) => {
     let addedItemNames: string[] = [];
+    const loginPage = new LoginPage(page);
+    const sortingPage = new SortingPage(page);
+    const cartPage = new CartPage(page);
+    const checkoutInformationPage = new CheckoutInformationPage(page);
+    const checkoutOverviewPage = new CheckoutOverviewPage(page);
+    const checkoutCompletePage = new CheckoutCompletePage(page);
     
     await test.step('Login', async () => {
-        const loginPage = new LoginPage(page);
-        
         await navigateUrl(page, commonConfig.baseUrl);
         await loginPage.login(credentialConfig.username, credentialConfig.password);
         
@@ -22,8 +27,6 @@ test('SauceDemo full user flow @critical', async ({ page }) => {
     });
 
     await test.step('Browse / Filter Products', async () => {
-        const sortingPage = new SortingPage(page);
-        
         const expectedItemPrices = await sortingPage.getItemPrices('asc');
         
         await sortingPage.selectSortingOption('lohi','Low-High');
@@ -33,9 +36,7 @@ test('SauceDemo full user flow @critical', async ({ page }) => {
     });
 
     await test.step('Add Products to Cart', async () => {
-        const cartPage = new CartPage(page);
-        
-        addedItemNames = await cartPage.addItemsToCart(2, 6);
+        addedItemNames = await cartPage.addItemsAtToCart(data.itemIndexes);
         await cartPage.openCart();
                 
         await cartPage.verifyCartItemCount(addedItemNames.length);
@@ -43,8 +44,6 @@ test('SauceDemo full user flow @critical', async ({ page }) => {
     });
 
     await test.step('View Cart', async () => {
-        const cartPage = new CartPage(page);
-        
         const updatedItems = await cartPage.removeItemFromCart(1, addedItemNames);
         addedItemNames = updatedItems;
 
@@ -53,9 +52,6 @@ test('SauceDemo full user flow @critical', async ({ page }) => {
     });
 
     await test.step('Checkout', async () => {
-        const cartPage = new CartPage(page);
-        const checkoutInformationPage = new CheckoutInformationPage(page);
-
         cartPage.checkOut();
 
         verifyUrl(page, `${commonConfig.baseUrl}/checkout-step-one.html`);
@@ -70,9 +66,6 @@ test('SauceDemo full user flow @critical', async ({ page }) => {
     });
 
     await test.step('Review Order', async () => {
-        const cartPage = new CartPage(page);
-        const checkoutOverviewPage = new CheckoutOverviewPage(page);
-        
         await cartPage.verifyCartItems(addedItemNames);
         await checkoutOverviewPage.verifyCartItemQuantities(addedItemNames.map(() => '1'));
         
@@ -83,8 +76,6 @@ test('SauceDemo full user flow @critical', async ({ page }) => {
     });
 
     await test.step('Order Confirmation', async () => {
-        const checkoutCompletePage = new CheckoutCompletePage(page);
-        
         await checkoutCompletePage.verifyOrderCompletion('Thank you for your order!');
 
         await checkoutCompletePage.backToHome();
@@ -92,10 +83,10 @@ test('SauceDemo full user flow @critical', async ({ page }) => {
     });
 
     await test.step('Logout', async () => {
-        const loginPage = new LoginPage(page);
-    
         await loginPage.logout();
 
         await verifyUrl(page, `${commonConfig.baseUrl}/`);
     });
 });
+
+selectItemData.forEach(data => runTest(data));
