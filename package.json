@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug",
+    "test:ui": "npx playwright test --ui",
+    "test:unit:saucedemo-shopping": "npx playwright test --project=saucedemoShoppingUnit",
+    "test:full:saucedemo-shopping": "npx playwright test --project=saucedemoShoppingFullflow",
+    "test:unit:orangehrm-dashboard": "npx playwright test --project=orangehrmDashboardUnit",
+    "test:smoke:saucedemo": "npx playwright test --grep @smoke",
+    "test:critical:saucedemo": "npx playwright test --grep @critical"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

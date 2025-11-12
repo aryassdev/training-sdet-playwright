@@ -20,9 +20,9 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [['html'], ['json', { outputFile: 'test-results.json' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -45,6 +45,21 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
+    {
+      name: 'saucedemoShoppingUnit',
+      testMatch: ['tests/saucedemo/*.unit.spec.ts'],
+      use: {...devices['Desktop Chrome']},
+    },
+    {
+      name: 'saucedemoShoppingFullflow',
+      testMatch: ['tests/saucedemo/shopping.fullflow.spec.ts'],
+      use: {...devices['Desktop Chrome']},
+    },
+    {
+      name: 'orangehrmDashboardUnit',
+      testMatch: ['tests/orangehrm/*.unit.spec.ts'],
+      use: {...devices['Desktop Chrome']},
+    },
     // Webkit disabled due to compatibility issues with Ubuntu 22.04
     // {
     //   name: 'webkit',

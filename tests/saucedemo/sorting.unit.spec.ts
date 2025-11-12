@@ -14,7 +14,7 @@ test.describe('SauceDemo Sorting Tests', () => {
         await verifyUrl(page, `${commonConfig.baseUrl}/inventory.html`);
     });
 
-    test('Sort items as Name A-Z and verify the item is sorted properly', async ({ page }) => {
+    test('Sort items as Name A-Z and verify the item is sorted properly @smoke', async ({ page }) => {
         const sortingPage = new SortingPage(page);
 
         const expectedItemNames = await sortingPage.getItemNames('asc');
@@ -36,7 +36,7 @@ test.describe('SauceDemo Sorting Tests', () => {
         await sortingPage.verifyEqual(expectedItemNames, sortedItemNames);
     });
 
-    test('Sort items as Price Low-High and verify the item is sorted properly', async ({ page }) => {
+    test('Sort items as Price Low-High and verify the item is sorted properly @smoke', async ({ page }) => {
         const sortingPage = new SortingPage(page);
 
         const expectedItemPrices = await sortingPage.getItemPrices('asc');

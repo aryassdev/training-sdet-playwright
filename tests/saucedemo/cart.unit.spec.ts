@@ -15,7 +15,7 @@ test.describe('SauceDemo Cart Functionality Tests', () => {
         await verifyUrl(page, `${commonConfig.baseUrl}/inventory.html`);
     });
 
-    test('Select random item (2-6) Add to Cart and verify the cart shows correct badge number and the item exist when Cart is opened', async ({ page }) => {
+    test('Select random item (2-6) Add to Cart and verify the cart shows correct badge number and the item exist when Cart is opened @smoke', async ({ page }) => {
         const cartPage = new CartPage(page);
 
         const addedItemNames = await cartPage.addItemsToCart(2, 6);

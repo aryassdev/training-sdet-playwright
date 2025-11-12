@@ -9,7 +9,7 @@ import { CheckoutInformationPage } from "../../resources/saucedemo/pages/checkou
 import { CheckoutOverviewPage } from "../../resources/saucedemo/pages/checkoutOverviewPage";
 import { CheckoutCompletePage } from "../../resources/saucedemo/pages/checkoutCompletePage";
 
-test('SauceDemo full user flow', async ({ page }) => {
+test('SauceDemo full user flow @critical', async ({ page }) => {
     let addedItemNames: string[] = [];
     
     await test.step('Login', async () => {
