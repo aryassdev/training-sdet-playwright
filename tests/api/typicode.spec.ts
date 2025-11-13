@@ -1,6 +1,6 @@
 import { expect, request, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { commonConfig } from '../../config/typicode/common';
+import { commonConfig } from '@config/typicode/common';
 
 test('POST - create post', async () => {
   const apiContext = await request.newContext();

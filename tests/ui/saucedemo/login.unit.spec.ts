@@ -1,8 +1,8 @@
 import { test } from '@playwright/test';
-import { LoginPage } from '../../resources/saucedemo/pages/loginPage';
-import { credentialConfig } from '../../config/saucedemo/credentials';
-import { commonConfig } from '../../config/saucedemo/common';
-import { navigateUrl, verifyUrl } from '../../resources/common/helpers/navigation';
+import { LoginPage } from '@resources/saucedemo/pages/loginPage';
+import { credentialConfig } from '@config/saucedemo/credentials';
+import { commonConfig } from '@config/saucedemo/common';
+import { navigateUrl, verifyUrl } from '@resources/common/helpers/navigation';
 
 test('User should be able to Login with valid credentials and verify the correct URL after logged in @smoke', async ({ page }) => {
     const loginPage = new LoginPage(page);

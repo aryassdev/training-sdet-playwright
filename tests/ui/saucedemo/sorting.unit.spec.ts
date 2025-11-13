@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
-import { LoginPage } from "../../resources/saucedemo/pages/loginPage";
-import { SortingPage } from "../../resources/saucedemo/pages/sortingPage";
-import { commonConfig } from "../../config/saucedemo/common";
-import { credentialConfig } from "../../config/saucedemo/credentials";
-import { navigateUrl, verifyUrl } from "../../resources/common/helpers/navigation";
+import { LoginPage } from "@resources/saucedemo/pages/loginPage";
+import { SortingPage } from "@resources/saucedemo/pages/sortingPage";
+import { commonConfig } from "@config/saucedemo/common";
+import { credentialConfig } from "@config/saucedemo/credentials";
+import { navigateUrl, verifyUrl } from "@resources/common/helpers/navigation";
 
 test.describe('SauceDemo Sorting Tests', () => {
     test.beforeEach(async ({ page }) => {

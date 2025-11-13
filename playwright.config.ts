@@ -47,19 +47,29 @@ export default defineConfig({
 
     {
       name: 'saucedemoShoppingUnit',
-      testMatch: ['tests/saucedemo/*.unit.spec.ts'],
+      testMatch: ['tests/ui/saucedemo/*.unit.spec.ts'],
       use: {...devices['Desktop Chrome']},
     },
     {
       name: 'saucedemoShoppingFullflow',
-      testMatch: ['tests/saucedemo/shopping.fullflow.spec.ts'],
+      testMatch: ['tests/ui/saucedemo/shopping.fullflow.spec.ts'],
       use: {...devices['Desktop Chrome']},
     },
     {
       name: 'orangehrmDashboardUnit',
-      testMatch: ['tests/orangehrm/*.unit.spec.ts'],
+      testMatch: ['tests/ui/orangehrm/*.unit.spec.ts'],
       use: {...devices['Desktop Chrome']},
     },
+    {
+      name: 'typicodeApi',
+      testMatch: ['tests/api/typicode.spec.ts'],
+      use: {...devices['Desktop Chrome']},
+    },
+    {
+      name: 'reqresApi',
+      testMatch: ['tests/api/reqres.spec.ts'],
+      use: {...devices['Desktop Chrome']},
+    }
     // Webkit disabled due to compatibility issues with Ubuntu 22.04
     // {
     //   name: 'webkit',

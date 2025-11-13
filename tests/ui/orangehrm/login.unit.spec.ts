@@ -1,8 +1,8 @@
 import { test } from '@playwright/test';
-import { LoginPage } from '../../resources/orangehrm/pages/loginPage';
-import { commonConfig } from '../../config/orangehrm/common';
-import { credentialConfig } from '../../config/orangehrm/credentials';
-import { navigateUrl, verifyUrl } from '../../resources/common/helpers/navigation';
+import { LoginPage } from '@resources/orangehrm/pages/loginPage';
+import { commonConfig } from '@config/orangehrm/common';
+import { credentialConfig } from '@config/orangehrm/credentials';
+import { navigateUrl, verifyUrl } from '@resources/common/helpers/navigation';
 
 test('User should be able to Login with valid credentials and verify the correct URL after logged in', async ({ page }) => {
     const loginPage = new LoginPage(page);

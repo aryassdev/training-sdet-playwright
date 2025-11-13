@@ -1,14 +1,14 @@
 import test, { Page } from "@playwright/test";
-import { LoginPage } from "../../resources/saucedemo/pages/loginPage";
-import { navigateUrl, verifyUrl } from "../../resources/common/helpers/navigation";
-import { commonConfig } from "../../config/saucedemo/common";
-import { credentialConfig } from "../../config/saucedemo/credentials";
-import { SortingPage } from "../../resources/saucedemo/pages/sortingPage";
-import { CartPage } from "../../resources/saucedemo/pages/cartPage";
-import { CheckoutInformationPage } from "../../resources/saucedemo/pages/checkoutInformationPage";
-import { CheckoutOverviewPage } from "../../resources/saucedemo/pages/checkoutOverviewPage";
-import { CheckoutCompletePage } from "../../resources/saucedemo/pages/checkoutCompletePage";
-import { selectItemData } from "../../resources/saucedemo/data/selectItemData";
+import { LoginPage } from "@resources/saucedemo/pages/loginPage";
+import { navigateUrl, verifyUrl } from "@resources/common/helpers/navigation";
+import { commonConfig } from "@config/saucedemo/common";
+import { credentialConfig } from "@config/saucedemo/credentials";
+import { SortingPage } from "@resources/saucedemo/pages/sortingPage";
+import { CartPage } from "@resources/saucedemo/pages/cartPage";
+import { CheckoutInformationPage } from "@resources/saucedemo/pages/checkoutInformationPage";
+import { CheckoutOverviewPage } from "@resources/saucedemo/pages/checkoutOverviewPage";
+import { CheckoutCompletePage } from "@resources/saucedemo/pages/checkoutCompletePage";
+import { selectItemData } from "@resources/saucedemo/data/selectItemData";
 
 const runTest = (data: { name: string; itemIndexes: number[] }) => test(`SauceDemo full user flow @critical: ${data.name}`, async ({ page }) => {
     let addedItemNames: string[] = [];

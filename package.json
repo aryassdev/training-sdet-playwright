@@ -12,7 +12,9 @@
     "test:full:saucedemo-shopping": "npx playwright test --project=saucedemoShoppingFullflow",
     "test:unit:orangehrm-dashboard": "npx playwright test --project=orangehrmDashboardUnit",
     "test:smoke:saucedemo": "npx playwright test --grep @smoke",
-    "test:critical:saucedemo": "npx playwright test --grep @critical"
+    "test:critical:saucedemo": "npx playwright test --grep @critical",
+    "test:typicode-api": "npx playwright test --project=typicodeApi",
+    "test:reqres-api": "npx playwright test --project=reqresApi"
   },
   "keywords": [],
   "author": "",
