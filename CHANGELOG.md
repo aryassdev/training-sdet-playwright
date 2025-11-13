@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v6.0.0] - 2025-11-12
+
+### Changed
+- test: add saucedemo fullflow test with selected event
+
+### Build
+- build: add custom playwright config
+
 ## [v5.0.0] - 2025-11-11
 
 ### Added
@@ -107,6 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - test: add user can login test
 - build: setup playwright
 
+[v6.0.0]: https://github.com/aryassdev/training-sdet-playwright/compare/v5.0.0...v6.0.0
 [v5.0.0]: https://github.com/aryassdev/training-sdet-playwright/compare/v4.0.2...v5.0.0
 [v4.0.2]: https://github.com/aryassdev/training-sdet-playwright/compare/v4.0.1...v4.0.2
 [v4.0.1]: https://github.com/aryassdev/training-sdet-playwright/compare/v4.0.0...v4.0.1
