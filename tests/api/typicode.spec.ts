@@ -1,9 +1,10 @@
 import { expect, request, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { commonConfig } from '../../config/typicode/common';
 
 test('POST - create post', async () => {
   const apiContext = await request.newContext();
-  const res = await apiContext.post('https://jsonplaceholder.typicode.com/posts', {
+  const res = await apiContext.post(`${commonConfig.baseUrl}/posts`, {
     data: {
         title: 'Hello world',
         body: 'This is a test',
@@ -18,7 +19,7 @@ test('POST - create post', async () => {
 
 test('PUT - update post', async () => {
     const apiContext = await request.newContext();
-    const res = await apiContext.put('https://jsonplaceholder.typicode.com/posts/1', {
+    const res = await apiContext.put(`${commonConfig.baseUrl}/posts/1`, {
         data: {
             id: 1,
             title: 'Updated title',
@@ -34,7 +35,7 @@ test('PUT - update post', async () => {
 
 test('GET - list posts', async () => {
     const apiContext = await request.newContext();
-    const res = await apiContext.get('https://jsonplaceholder.typicode.com/posts');
+    const res = await apiContext.get(`${commonConfig.baseUrl}/posts`);
 
     expect(res.status()).toBe(200);
     const body = await res.json();
@@ -46,7 +47,7 @@ test('POST with dynamic post data', async () => {
     const title = faker.lorem.sentence();
     const bodyContent = faker.lorem.paragraph();
 
-    const res = await apiContext.post('https://jsonplaceholder.typicode.com/posts', {
+    const res = await apiContext.post(`${commonConfig.baseUrl}/posts`, {
         data: {
             title: title,
             body: bodyContent,
@@ -60,6 +61,7 @@ test('POST with dynamic post data', async () => {
 });
 
 test('Mock GET posts with assertion', async ({ page }) => {
+    // note: unable to use env config for mocking in this case
     await page.route('https://jsonplaceholder.typicode.com/posts*', async route => {
         await route.fulfill({
             status: 200,
@@ -78,6 +80,7 @@ test('Mock GET posts with assertion', async ({ page }) => {
 });
 
 test('Mock only GET request', async ({ page }) => {
+    // note: unable to use env config for mocking in this case
     await page.route('https://jsonplaceholder.typicode.com/posts*', async route => {
         if (route.request().method() === 'GET') {
             await route.fulfill({

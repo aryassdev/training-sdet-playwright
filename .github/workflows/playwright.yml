@@ -25,6 +25,9 @@ jobs:
         ORANGEHRM_BASE_URL: ${{ secrets.ORANGEHRM_BASE_URL }}
         ORANGEHRM_USERNAME: ${{ secrets.ORANGEHRM_USERNAME }}
         ORANGEHRM_PASSWORD: ${{ secrets.ORANGEHRM_PASSWORD }}
+        TYPICODE_BASE_URL: ${{ secrets.TYPICODE_BASE_URL }}
+        REQRES_BASE_URL: ${{ secrets.REQRES_BASE_URL }}
+        REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
       run: npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
