@@ -61,8 +61,7 @@ test('POST with dynamic post data', async () => {
 });
 
 test('Mock GET posts with assertion', async ({ page }) => {
-    // note: unable to use env config for mocking in this case
-    await page.route('https://jsonplaceholder.typicode.com/posts*', async route => {
+    await page.route(`${commonConfig.baseUrl}/posts*`, async route => {
         await route.fulfill({
             status: 200,
             contentType: 'application/json',
@@ -70,18 +69,17 @@ test('Mock GET posts with assertion', async ({ page }) => {
         });
     });
 
-    const response = await page.evaluate(async () => {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const response = await page.evaluate(async (baseUrl) => {
+        const res = await fetch(`${baseUrl}/posts`);
         return res.json();
-    });
+    }, commonConfig.baseUrl) as Post[];
 
     expect(response[0].title).toBe('Mock Post');
     expect(response[0].id).toBe(999);
 });
 
 test('Mock only GET request', async ({ page }) => {
-    // note: unable to use env config for mocking in this case
-    await page.route('https://jsonplaceholder.typicode.com/posts*', async route => {
+    await page.route(`${commonConfig.baseUrl}/posts*`, async route => {
         if (route.request().method() === 'GET') {
             await route.fulfill({
                 status: 200,
@@ -93,10 +91,10 @@ test('Mock only GET request', async ({ page }) => {
         }
     });
 
-    const response = await page.evaluate(async () => {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const response = await page.evaluate(async (baseUrl) => {
+        const res = await fetch(`${baseUrl}/posts`);
         return res.json();
-    });
+    }, commonConfig.baseUrl) as Post[];
 
     expect(response[0].title).toBe('Mock Post');
     expect(response[0].id).toBe(999);
