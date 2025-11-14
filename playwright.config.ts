@@ -33,6 +33,10 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
 
+  /** Global setup */
+  globalSetup: require.resolve('./tests/global-setup.ts'),
+  globalTeardown: require.resolve('./tests/global-teardown.ts'),
+
   /* Configure projects for major browsers */
   projects: [
     {
